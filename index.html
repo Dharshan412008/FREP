@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FREP — Factory Resource Exchange Platform</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">INDUSTRY 4.0 / 5.0 DEMO</p>
+          <h1>Factory Resource Exchange Platform</h1>
+          <p class="lede">
+            A collaborative network for MSMEs to share underused machinery, space, talent, and logistics in real time.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <div class="role-switcher" id="roleSwitch">
+            <button class="role-btn active" data-role="buyer">Buyer</button>
+            <button class="role-btn" data-role="owner">Resource Owner</button>
+            <button class="role-btn" data-role="admin">Network Admin</button>
+          </div>
+          <button class="secondary" id="demoModeBtn" type="button">FREP Innovation Demo</button>
+          <div class="status-pill" id="roleBadge">Active role: Buyer</div>
+        </div>
+      </header>
+
+      <main class="grid">
+        <section class="panel dashboard">
+          <div class="panel-header">
+            <h2>Operations Dashboard</h2>
+            <span class="pill">Live network view</span>
+          </div>
+          <div class="stats-grid" id="statsGrid"></div>
+        </section>
+
+        <section class="panel browse">
+          <div class="panel-header">
+            <h2>Browse & Match</h2>
+            <span class="pill">AI-assisted matching</span>
+          </div>
+          <form id="matchForm" class="stack">
+            <div class="row">
+              <label>
+                Resource type
+                <select id="resourceType" name="resourceType">
+                  <option value="">Any</option>
+                  <option value="CNC Lathe">CNC Lathe</option>
+                  <option value="Warehouse Space">Warehouse Space</option>
+                  <option value="Testing Equipment">Testing Equipment</option>
+                  <option value="Skilled Operator">Skilled Operator</option>
+                  <option value="Logistics Vehicle">Logistics Vehicle</option>
+                </select>
+              </label>
+              <label>
+                Cluster / location
+                <input id="clusterInput" name="clusterInput" list="clusterSuggestions" placeholder="Peenya" />
+              </label>
+            </div>
+            <div class="row">
+              <label>
+                Budget (₹/day)
+                <input id="budgetInput" name="budgetInput" type="number" min="0" value="6000" />
+              </label>
+              <label>
+                Deadline
+                <input id="deadlineInput" name="deadlineInput" type="date" />
+              </label>
+            </div>
+            <div class="row">
+              <label>
+                Search
+                <input id="searchInput" name="searchInput" list="resourceSearchSuggestions" placeholder="Search by resource or cluster" />
+              </label>
+              <label>
+                Sort by
+                <select id="sortInput" name="sortInput">
+                  <option value="score">Match score</option>
+                  <option value="price">Price</option>
+                  <option value="rating">Rating</option>
+                </select>
+              </label>
+            </div>
+            <div class="row filter-row">
+              <label class="checkbox-label">
+                <input id="verifiedOnly" type="checkbox" /> Verified only
+              </label>
+              <label class="checkbox-label">
+                <input id="availableOnly" type="checkbox" /> Available only
+              </label>
+            </div>
+            <div class="row button-row">
+              <button class="primary" type="submit">Run match engine</button>
+              <button class="secondary" id="resetFiltersBtn" type="button">Reset filters</button>
+            </div>
+          </form>
+          <div id="matchResults" class="results-list"></div>
+        </section>
+
+        <section class="panel planner">
+          <div class="panel-header">
+            <h2>Production Requirement Planner</h2>
+            <span class="pill">Build the industrial resource chain</span>
+          </div>
+          <form id="productionPlannerForm" class="stack">
+            <div class="row">
+              <label>
+                Product name
+                <input id="productName" list="productNameSuggestions" placeholder="Aluminium Bracket" required />
+              </label>
+              <label>
+                Quantity
+                <input id="productQuantity" type="number" min="1" value="2000" required />
+              </label>
+            </div>
+            <div class="row">
+              <label>
+                Material
+                <input id="productMaterial" list="materialSuggestions" placeholder="Aluminium" required />
+              </label>
+              <label>
+                Required processes
+                <input id="productProcesses" placeholder="CNC machining, Surface finishing, Quality inspection" required />
+                <div id="productProcessesSuggestions" class="suggestions-list" aria-live="polite"></div>
+              </label>
+            </div>
+            <div class="row">
+              <label>
+                Deadline (days)
+                <input id="productDeadline" type="number" min="1" value="5" required />
+              </label>
+              <label>
+                Budget (₹)
+                <input id="productBudget" type="number" min="1000" value="80000" required />
+              </label>
+            </div>
+            <div class="row">
+              <label>
+                Preferred cluster
+                <input id="productCluster" list="clusterSuggestions" placeholder="Coimbatore" />
+              </label>
+              <label>
+                Quality requirement
+                <input id="productQuality" placeholder="Standard / High" />
+              </label>
+            </div>
+            <div class="row button-row">
+              <button class="primary" type="submit">Analyze requirement</button>
+            </div>
+          </form>
+          <div id="productionPlanResult" class="results-list"></div>
+        </section>
+
+        <section class="panel map">
+          <div class="panel-header">
+            <h2>Network Map</h2>
+            <span class="pill">Cluster distribution</span>
+          </div>
+          <div class="map-visual" id="mapVisual"></div>
+        </section>
+
+        <section class="panel listing">
+          <div class="panel-header">
+            <h2>List a Resource</h2>
+            <span class="pill">Pending verification</span>
+          </div>
+          <form id="listForm" class="stack">
+            <div class="row">
+              <label>
+                Category
+                <select id="listCategory">
+                  <option value="Machinery">Machinery</option>
+                  <option value="Warehouse Space">Warehouse Space</option>
+                  <option value="Testing Equipment">Testing Equipment</option>
+                  <option value="Skilled Operator">Skilled Operator</option>
+                  <option value="Logistics Vehicle">Logistics Vehicle</option>
+                </select>
+              </label>
+              <label>
+                Resource name
+                <input id="listName" list="resourceNameSuggestions" placeholder="e.g. 5-axis VMC" required />
+              </label>
+            </div>
+            <div class="row">
+              <label>
+                Cluster
+                <input id="listCluster" list="clusterSuggestions" placeholder="Bhosari" required />
+              </label>
+              <label>
+                Price (₹/day)
+                <input id="listPrice" type="number" min="0" required />
+              </label>
+            </div>
+            <label>
+              Description
+              <textarea id="listDescription" rows="3" placeholder="Describe the capability and availability"></textarea>
+            </label>
+            <button class="primary" type="submit">Submit listing</button>
+          </form>
+        </section>
+
+        <section class="panel admin">
+          <div class="panel-header">
+            <h2>Verification Workflow</h2>
+            <span class="pill">Admin review</span>
+          </div>
+          <div id="adminQueue" class="results-list"></div>
+        </section>
+
+        <section class="panel notifications">
+          <div class="panel-header">
+            <h2>Notifications</h2>
+            <span class="pill">Network alerts</span>
+          </div>
+          <div id="notificationsPanel" class="results-list"></div>
+        </section>
+
+        <section class="panel owner">
+          <div class="panel-header">
+            <h2>My Listings</h2>
+            <span class="pill">Owner operations</span>
+          </div>
+          <div id="ownerListings" class="results-list"></div>
+        </section>
+
+        <section class="panel booking">
+          <div class="panel-header">
+            <h2>Booking</h2>
+            <span class="pill">Single request + bundle</span>
+          </div>
+          <div class="booking-layout">
+            <div>
+              <h3>Quick booking</h3>
+              <select id="quickBookingSelect"></select>
+              <button class="primary" id="quickBookBtn" type="button">Book selected resource</button>
+            </div>
+            <div>
+              <h3>Bundle cart</h3>
+              <div id="cartList" class="cart-list"></div>
+              <button class="secondary" id="addToCartBtn" type="button">Add visible match to cart</button>
+              <button class="primary" id="submitBundleBtn" type="button">Submit bundle request</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel bookings">
+          <div class="panel-header">
+            <h2>My Bookings</h2>
+            <span class="pill">Delivery & feedback</span>
+          </div>
+          <div id="bookingHistory" class="results-list"></div>
+        </section>
+
+        <section class="panel analytics">
+          <div class="panel-header">
+            <h2>Analytics</h2>
+            <span class="pill">Demand vs. supply</span>
+          </div>
+          <div class="chart-grid">
+            <div>
+              <h3>Listed resources vs demand</h3>
+              <div id="categoryChart" class="chart"></div>
+            </div>
+            <div>
+              <h3>Bookings over time</h3>
+              <div id="trendChart" class="chart"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <datalist id="clusterSuggestions"></datalist>
+    <datalist id="resourceSearchSuggestions"></datalist>
+    <datalist id="resourceNameSuggestions"></datalist>
+    <datalist id="productNameSuggestions">
+      <option value="Aluminium Bracket"></option>
+      <option value="Precision Shaft"></option>
+      <option value="Sheet Metal Enclosure"></option>
+      <option value="Industrial Fixture"></option>
+    </datalist>
+    <datalist id="materialSuggestions">
+      <option value="Aluminium"></option>
+      <option value="Mild Steel"></option>
+      <option value="Stainless Steel"></option>
+      <option value="Brass"></option>
+      <option value="Plastic"></option>
+    </datalist>
+
+    <script src="app.js"></script>
+  </body>
+</html>

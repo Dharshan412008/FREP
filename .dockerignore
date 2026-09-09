@@ -1,0 +1,25 @@
+# Start from a deny-all context so local databases, credentials, virtual
+# environments, reports, test fixtures, and temporary artifacts cannot leak.
+**
+!Dockerfile
+!.dockerignore
+!compose.yaml
+!requirements.txt
+!server.py
+!ai_engine.py
+!index.html
+!styles.css
+!app.js
+!copilot-worker.js
+!explanation.html
+!manifest.json
+!sw.js
+!frontend/
+!frontend/package.json
+!frontend/package-lock.json
+!frontend/vite.config.js
+!frontend/index.html
+!frontend/src/
+!frontend/src/**
+frontend/node_modules/
+frontend/dist/

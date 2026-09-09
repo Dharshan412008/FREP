@@ -1,0 +1,22 @@
+services:
+  frep:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      FREP_DB_PATH: /var/lib/frep/frep.db
+      # Set FREP_SECRET_KEY in the shell for shared/production deployments.
+      FREP_SECRET_KEY: "${FREP_SECRET_KEY:-frep-local-judge-secret-change-me}"
+    volumes:
+      - frep_data:/var/lib/frep
+    init: true
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+volumes:
+  frep_data:

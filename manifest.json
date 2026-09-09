@@ -1,0 +1,28 @@
+{
+  "id": "/",
+  "name": "FREP — Industrial Capacity Exchange",
+  "short_name": "FREP Floor",
+  "description": "A live exchange floor for discovering, planning, and sharing verified industrial capacity across Indian manufacturing clusters.",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#0b0d0f",
+  "theme_color": "#0b0d0f",
+  "categories": ["business", "productivity", "utilities", "shopping"],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='108' fill='%230b0d0f'/%3E%3Ccircle cx='256' cy='256' r='176' fill='%23f2b544'/%3E%3Cpath d='M166 136h202v66H240v58h106v64H240v112h-74z' fill='%230b0d0f'/%3E%3Ccircle cx='366' cy='368' r='31' fill='%232aa598'/%3E%3C/svg%3E",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
